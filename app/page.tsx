@@ -1,103 +1,385 @@
-import Image from "next/image";
+"use client"
 
-export default function Home() {
+import { portfolioData } from "./constants"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Separator } from "@/components/ui/separator"
+import { PixelArt } from "@/components/pixel-art.jsx"
+import { MapPin, Mail, ExternalLink, Github, Calendar, Award, Code, Zap } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
+
+export default function PixelatedPortfolio() {
+  const { personal, workExperience, projects } = portfolioData
+
+  const scrollToSection = (sectionId: string) => {
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" })
+  }
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
+    <div className="min-h-screen bg-gradient-to-b from-blue-100 to-blue-200 relative overflow-hidden">
+      {/* Floating Pixel Art Decorations */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <PixelArt type="cloud" size="md" className="absolute top-10 left-10 opacity-60" />
+        <PixelArt type="cloud" size="sm" className="absolute top-20 right-20 opacity-40" />
         <Image
-          className="dark:invert"
-          src="/next.svg"
+          src="/pixelHeart.png"
           alt="Next.js logo"
-          width={180}
-          height={38}
+          width={100}
+          height={60}
           priority
+          className="absolute top-32 left-1/4 opacity-50"
         />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+        <PixelArt type="star" size="sm" className="absolute top-40 right-1/3 opacity-60" />
+        <Image
+          src="/pixelFlower.png"
+          alt="Next.js logo"
+          width={100}
+          height={60}
+          priority
+          className="absolute top-80 right-10 opacity-40"
+        />
+        <PixelArt type="bunny" size="md" className="absolute bottom-40 left-10 opacity-60" />
+        <PixelArt type="bee" size="sm" className="absolute bottom-60 right-1/4 opacity-50" />
+        <PixelArt type="heart" size="md" className="absolute bottom-20 left-1/3 opacity-40" />
+        <PixelArt type="star" size="lg" className="absolute bottom-32 right-20 opacity-50" />
+      </div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/* Header */}
+      <header className="sticky top-0 z-50 bg-blue-200 border-b-4 border-blue-300 shadow-lg">
+        <div className="container mx-auto px-4 py-4">
+          <nav className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <Image
+                src="/pixelDogWalkingBlue.gif"
+                alt="Next.js logo"
+                width={100}
+                height={60}
+                priority
+              />
+              <h1 className="text-2xl font-bold text-white font-mono">{personal.name}</h1>
+            </div>
+            <div className="hidden md:flex space-x-1">
+              {["about", "experience", "projects"].map((section) => (
+                <Button
+                  key={section}
+                  variant="ghost"
+                  onClick={() => scrollToSection(section)}
+                  className="text-white hover:bg-blue-400 hover:text-white font-mono text-sm border-2 border-transparent hover:border-blue-300 transition-all duration-200"
+                >
+                  {section.charAt(0).toUpperCase() + section.slice(1)}
+                </Button>
+              ))}
+            </div>
+          </nav>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+      </header>
+
+      {/* Hero Section */}
+      <section className="py-20 px-4 text-center relative z-10">
+        <div className="container mx-auto relative">
+          <div className="mb-8 relative">
+            <Image
+              src={personal.avatar || "/placeholder.svg"}
+              alt={personal.name}
+              width={120}
+              height={120}
+              className="mx-auto rounded-lg border-4 border-blue-600 shadow-lg"
+            />
+            <Image
+                src="/pixelCloud.png"
+                alt="Next.js logo"
+                width={100}
+                height={60}
+                priority
+              />
+          </div>
+          <h1 className="text-5xl md:text-6xl font-bold text-blue-800 mb-4 font-mono">{personal.name}</h1>
+          <p className="text-xl md:text-2xl text-blue-700 mb-8 font-mono">{personal.title}</p>
+          <div className="flex justify-center space-x-4 mb-8">
+            <div className="flex items-center text-blue-600">
+              <MapPin className="h-5 w-5 mr-2" />
+              <span className="font-mono">{personal.location}</span>
+            </div>
+            <div className="flex items-center text-blue-600">
+              <Mail className="h-5 w-5 mr-2" />
+              <span className="font-mono">{personal.email}</span>
+            </div>
+          </div>
+          <Button
+            onClick={() => scrollToSection("about")}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-mono text-lg px-8 py-3 border-4 border-blue-800 shadow-lg hover:shadow-xl transition-all duration-200"
+          >
+            <PixelArt type="star" size="sm" className="mr-2" />
+            Explore My Garden
+          </Button>
+        </div>
+      </section>
+
+      {/* About Me Section */}
+      <section id="about" className="py-20 px-4 bg-white/50 relative z-10">
+        <div className="container mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-blue-800 mb-4 font-mono flex items-center justify-center">
+              <PixelArt type="bunny" size="md" className="mr-3" />
+              About Me
+              <PixelArt type="flower" size="md" className="ml-3" />
+            </h2>
+            <div className="w-24 h-1 bg-blue-600 mx-auto"></div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <Card className="border-4 border-blue-600 shadow-lg bg-white relative">
+              <PixelArt type="butterfly" size="sm" className="absolute -top-2 -right-2" />
+              <CardContent className="p-8">
+                <p className="text-lg text-gray-700 leading-relaxed font-mono mb-6">{personal.bio}</p>
+                <div className="flex items-center text-blue-600 mb-4">
+                  <Zap className="h-5 w-5 mr-2" />
+                  <span className="font-mono font-semibold">Skills & Technologies</span>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {personal.skills.map((skill, index) => (
+                    <Badge
+                      key={index}
+                      variant="secondary"
+                      className="bg-blue-200 text-blue-800 font-mono border-2 border-blue-400 hover:bg-blue-300 transition-colors"
+                    >
+                      {skill}
+                    </Badge>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                { icon: Code, label: "Clean Code", desc: "Writing maintainable, scalable solutions", pixelArt: "star" },
+                { icon: Zap, label: "Growth Mindset", desc: "Always learning new technologies", pixelArt: "bee" },
+                { icon: Award, label: "Quality Focus", desc: "Building robust applications", pixelArt: "heart" },
+                { icon: Mail, label: "Communication", desc: "Creating delightful interactions", pixelArt: "butterfly" },
+              ].map((item, index) => (
+                <Card
+                  key={index}
+                  className="border-4 border-blue-500 bg-white hover:bg-blue-50 transition-colors relative"
+                >
+                  <PixelArt type={item.pixelArt as any} size="sm" className="absolute -top-1 -right-1" />
+                  <CardContent className="p-6 text-center">
+                    <item.icon className="h-8 w-8 text-blue-600 mx-auto mb-3" />
+                    <h3 className="font-bold text-blue-800 font-mono mb-2">{item.label}</h3>
+                    <p className="text-sm text-gray-600 font-mono">{item.desc}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Work Experience Section */}
+      <section id="experience" className="py-20 px-4 bg-blue-50/50 relative z-10">
+        <div className="container mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-blue-800 mb-4 font-mono flex items-center justify-center">
+              <PixelArt type="star" size="md" className="mr-3" />
+              Work Experience
+              <PixelArt type="heart" size="md" className="ml-3" />
+            </h2>
+            <div className="w-24 h-1 bg-blue-600 mx-auto"></div>
+          </div>
+
+          <div className="space-y-8">
+            {workExperience.map((job, index) => (
+              <Card
+                key={job.id}
+                className="border-4 border-blue-600 shadow-lg bg-white hover:shadow-xl transition-shadow relative"
+              >
+                <PixelArt type={index % 2 === 0 ? "flower" : "bunny"} size="sm" className="absolute -top-2 -right-2" />
+                <CardHeader className="bg-blue-100 border-b-4 border-blue-600">
+                  <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+                    <div>
+                      <CardTitle className="text-2xl text-blue-800 font-mono mb-2">{job.position}</CardTitle>
+                      <CardDescription className="text-lg text-blue-700 font-mono font-semibold">
+                        {job.company}
+                      </CardDescription>
+                    </div>
+                    <div className="flex items-center text-blue-600 mt-2 md:mt-0">
+                      <Calendar className="h-5 w-5 mr-2" />
+                      <span className="font-mono font-semibold">{job.duration}</span>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent className="p-6">
+                  <p className="text-gray-700 mb-6 font-mono leading-relaxed">{job.description}</p>
+
+                  <div className="mb-6">
+                    <h4 className="font-semibold text-blue-800 mb-3 font-mono flex items-center">
+                      <Code className="h-4 w-4 mr-2" />
+                      Technologies Used
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {job.technologies.map((tech, techIndex) => (
+                        <Badge
+                          key={techIndex}
+                          variant="outline"
+                          className="border-blue-500 text-blue-700 font-mono hover:bg-blue-100 transition-colors"
+                        >
+                          {tech}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 className="font-semibold text-blue-800 mb-3 font-mono flex items-center">
+                      <Zap className="h-4 w-4 mr-2" />
+                      Key Achievements
+                    </h4>
+                    <ul className="space-y-2">
+                      {job.achievements.map((achievement, achIndex) => (
+                        <li key={achIndex} className="flex items-start text-gray-700 font-mono">
+                          <PixelArt type="star" size="sm" className="mr-2 mt-0.5 flex-shrink-0" />
+                          {achievement}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Projects Section */}
+      <section id="projects" className="py-20 px-4 bg-white/50 relative z-10">
+        <div className="container mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-blue-800 mb-4 font-mono flex items-center justify-center">
+              <PixelArt type="bee" size="md" className="mr-3" />
+              Personal Projects
+              <PixelArt type="cloud" size="md" className="ml-3" />
+            </h2>
+            <div className="w-24 h-1 bg-blue-600 mx-auto"></div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {projects.map((project, index) => (
+              <Card
+                key={project.id}
+                className="border-4 border-blue-600 shadow-lg bg-white hover:shadow-xl transition-all duration-300 hover:-translate-y-1 relative"
+              >
+                <PixelArt
+                  type={["heart", "butterfly", "flower", "bunny"][index % 4] as any}
+                  size="sm"
+                  className="absolute -top-2 -right-2 z-10"
+                />
+                <CardHeader className="p-0">
+                  <div className="relative">
+                    <Image
+                      src={project.image || "/placeholder.svg"}
+                      alt={project.title}
+                      width={300}
+                      height={200}
+                      className="w-full h-48 object-cover border-b-4 border-blue-600"
+                    />
+                    <Badge
+                      className={`absolute top-4 right-4 font-mono ${
+                        project.status === "Live"
+                          ? "bg-green-600 text-white"
+                          : project.status === "Beta"
+                            ? "bg-yellow-500 text-white"
+                            : "bg-blue-500 text-white"
+                      }`}
+                    >
+                      {project.status}
+                    </Badge>
+                  </div>
+                </CardHeader>
+                <CardContent className="p-6">
+                  <CardTitle className="text-xl text-blue-800 mb-3 font-mono">{project.title}</CardTitle>
+                  <CardDescription className="text-gray-700 mb-4 font-mono leading-relaxed">
+                    {project.description}
+                  </CardDescription>
+
+                  <div className="mb-4">
+                    <h4 className="font-semibold text-blue-800 mb-2 font-mono text-sm">Technologies:</h4>
+                    <div className="flex flex-wrap gap-1">
+                      {project.technologies.map((tech, index) => (
+                        <Badge
+                          key={index}
+                          variant="secondary"
+                          className="bg-blue-200 text-blue-800 font-mono text-xs border border-blue-400"
+                        >
+                          {tech}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="mb-6">
+                    <h4 className="font-semibold text-blue-800 mb-2 font-mono text-sm">Key Features:</h4>
+                    <ul className="space-y-1">
+                      {project.features.slice(0, 3).map((feature, index) => (
+                        <li key={index} className="flex items-start text-sm text-gray-600 font-mono">
+                          <PixelArt type="star" size="sm" className="mr-2 mt-1 flex-shrink-0" />
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="flex space-x-3">
+                    {project.liveUrl && (
+                      <Button
+                        asChild
+                        className="bg-blue-600 hover:bg-blue-700 text-white font-mono text-sm border-2 border-blue-800 flex-1"
+                      >
+                        <Link href={project.liveUrl} target="_blank">
+                          <ExternalLink className="h-4 w-4 mr-2" />
+                          Live Demo
+                        </Link>
+                      </Button>
+                    )}
+                    <Button
+                      asChild
+                      variant="outline"
+                      className="border-2 border-blue-600 text-blue-700 hover:bg-blue-100 font-mono text-sm flex-1 bg-transparent"
+                    >
+                      <Link href={project.githubUrl} target="_blank">
+                        <Github className="h-4 w-4 mr-2" />
+                        Code
+                      </Link>
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-blue-600 text-white py-12 px-4 relative z-10">
+        <div className="container mx-auto text-center">
+          <div className="flex justify-center items-center mb-6">
+            <PixelArt type="heart" size="md" className="mr-2" />
+            <span className="text-xl font-mono font-bold">Thanks for visiting my digital garden!</span>
+            <PixelArt type="flower" size="md" className="ml-2" />
+          </div>
+          <p className="font-mono mb-4">{"Let's grow something amazing together."}</p>
+          <div className="flex justify-center space-x-6">
+            <Link href={`mailto:${personal.email}`} className="hover:text-blue-300 transition-colors">
+              <Mail className="h-6 w-6" />
+            </Link>
+            <Link href="https://github.com" className="hover:text-blue-300 transition-colors">
+              <Github className="h-6 w-6" />
+            </Link>
+          </div>
+          <Separator className="my-6 bg-blue-500" />
+          <p className="text-sm font-mono text-blue-200">© 2024 {personal.name}. Crafted with 💙 and pixels.</p>
+        </div>
       </footer>
     </div>
-  );
+  )
 }
