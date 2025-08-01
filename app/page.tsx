@@ -9,6 +9,11 @@ import { PixelArt } from "@/components/pixel-art.jsx"
 import { MapPin, Mail, ExternalLink, Github, Calendar, Award, Code, Zap } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { Pixelify_Sans } from "next/font/google"
+
+const pixelifySans = Pixelify_Sans({
+  variable: "--font-pixelify-sans",
+});
 
 export default function PixelatedPortfolio() {
   const { personal, workExperience, projects } = portfolioData
@@ -58,7 +63,7 @@ export default function PixelatedPortfolio() {
                 height={60}
                 priority
               />
-              <h1 className="text-2xl font-bold text-white font-mono">{personal.name}</h1>
+              {/* <h1 className="text-2xl font-bold text-white font-mono">{personal.name}</h1> */}
             </div>
             <div className="hidden md:flex space-x-1">
               {["about", "experience", "projects"].map((section) => (
@@ -66,7 +71,7 @@ export default function PixelatedPortfolio() {
                   key={section}
                   variant="ghost"
                   onClick={() => scrollToSection(section)}
-                  className="text-white hover:bg-blue-400 hover:text-white font-mono text-sm border-2 border-transparent hover:border-blue-300 transition-all duration-200"
+                  className="text-white hover:bg-blue-400 hover:text-white font-mono text-lg border-2 border-transparent hover:border-blue-300 transition-all duration-200"
                 >
                   {section.charAt(0).toUpperCase() + section.slice(1)}
                 </Button>
@@ -77,7 +82,7 @@ export default function PixelatedPortfolio() {
       </header>
 
       {/* Hero Section */}
-      <section className="py-20 px-4 text-center relative z-10">
+      {/* <section className="py-20 px-4 text-center relative z-10">
         <div className="container mx-auto relative">
           <div className="mb-8 relative">
             <Image
@@ -87,13 +92,7 @@ export default function PixelatedPortfolio() {
               height={120}
               className="mx-auto rounded-lg border-4 border-blue-600 shadow-lg"
             />
-            <Image
-                src="/pixelCloud.png"
-                alt="Next.js logo"
-                width={100}
-                height={60}
-                priority
-              />
+            
           </div>
           <h1 className="text-5xl md:text-6xl font-bold text-blue-800 mb-4 font-mono">{personal.name}</h1>
           <p className="text-xl md:text-2xl text-blue-700 mb-8 font-mono">{personal.title}</p>
@@ -115,63 +114,172 @@ export default function PixelatedPortfolio() {
             Explore My Garden
           </Button>
         </div>
-      </section>
+      </section> */}
 
       {/* About Me Section */}
       <section id="about" className="py-20 px-4 bg-white/50 relative z-10">
         <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-blue-800 mb-4 font-mono flex items-center justify-center">
-              <PixelArt type="bunny" size="md" className="mr-3" />
-              About Me
-              <PixelArt type="flower" size="md" className="ml-3" />
-            </h2>
-            <div className="w-24 h-1 bg-blue-600 mx-auto"></div>
-          </div>
 
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <Card className="border-4 border-blue-600 shadow-lg bg-white relative">
-              <PixelArt type="butterfly" size="sm" className="absolute -top-2 -right-2" />
-              <CardContent className="p-8">
-                <p className="text-lg text-gray-700 leading-relaxed font-mono mb-6">{personal.bio}</p>
-                <div className="flex items-center text-blue-600 mb-4">
-                  <Zap className="h-5 w-5 mr-2" />
-                  <span className="font-mono font-semibold">Skills & Technologies</span>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {personal.skills.map((skill, index) => (
-                    <Badge
-                      key={index}
-                      variant="secondary"
-                      className="bg-blue-200 text-blue-800 font-mono border-2 border-blue-400 hover:bg-blue-300 transition-colors"
+          <div className="grid lg:grid-cols-3 gap-12">
+            {/* Contact Card */}
+            <div className="lg:col-span-1 hover:shadow-xl transition-shadow duration-300">
+              <Card className="border-4 border-blue-300 shadow-lg bg-white relative sticky top-12">
+                <CardContent className="p-8 text-center">
+                  <div className="mb-6 relative">
+                    <Image
+                      src={"/noorPortfolio.png"}
+                      alt={personal.name}
+                      width={200}
+                      height={250}
+                      className="mx-auto rounded-lg shadow-lg"
+                    />
+                  </div>
+
+                  <h3 className="text-2xl font-bold text-blue-800 mb-2 font-mono">{personal.name}</h3>
+                  <p className="text-lg text-blue-700 mb-6 font-mono">{personal.title}</p>
+
+                  <div className="space-y-4 mb-6">
+                    <div className="flex items-center justify-center text-blue-600">
+                      <MapPin className="h-5 w-5 mr-3" />
+                      <span className="font-mono">{personal.location}</span>
+                    </div>
+                    <div className="flex items-center justify-center text-blue-600">
+                      <Mail className="h-5 w-5 mr-3" />
+                      <span className="font-mono text-sm">{personal.email}</span>
+                    </div>
+                  </div>
+
+                  <div className="space-y-3">
+                    <Button
+                      asChild
+                      className="w-full bg-blue-600 hover:bg-blue-700 text-white font-mono border-2 border-blue-800"
                     >
-                      {skill}
-                    </Badge>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            <div className="grid grid-cols-2 gap-4">
-              {[
-                { icon: Code, label: "Clean Code", desc: "Writing maintainable, scalable solutions", pixelArt: "star" },
-                { icon: Zap, label: "Growth Mindset", desc: "Always learning new technologies", pixelArt: "bee" },
-                { icon: Award, label: "Quality Focus", desc: "Building robust applications", pixelArt: "heart" },
-                { icon: Mail, label: "Communication", desc: "Creating delightful interactions", pixelArt: "butterfly" },
-              ].map((item, index) => (
-                <Card
-                  key={index}
-                  className="border-4 border-blue-500 bg-white hover:bg-blue-50 transition-colors relative"
-                >
-                  <PixelArt type={item.pixelArt as any} size="sm" className="absolute -top-1 -right-1" />
-                  <CardContent className="p-6 text-center">
-                    <item.icon className="h-8 w-8 text-blue-600 mx-auto mb-3" />
-                    <h3 className="font-bold text-blue-800 font-mono mb-2">{item.label}</h3>
-                    <p className="text-sm text-gray-600 font-mono">{item.desc}</p>
-                  </CardContent>
-                </Card>
-              ))}
+                      <Link href={personal.github} target="_blank">
+                        <Github className="h-4 w-4 mr-2" />
+                        View GitHub
+                      </Link>
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
+
+            {/* Bio Section */}
+            <div className="lg:col-span-2 flex flex-col justify-around">
+              
+              <div className="mb-8">
+                <div className="flex mb-4">
+                  <div className={`${pixelifySans.variable}`}>
+                    <h1 className={`${pixelifySans.variable} text-8xl font-bold text-blue-800 mb-4`}>
+                    Software
+                  </h1>
+                  <h1 className={`${pixelifySans.variable} text-8xl font-bold text-blue-600 mb-4`}>
+                    Engineer
+                  </h1>
+                  </div>
+                  <div>
+                    <Image
+                      src="/coolWorkingCat.png"
+                      alt="Next.js logo"
+                      width={200}
+                      height={200}
+                      priority
+                    />
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Bio Content */}
+              <div className="flex flex-col items-center">
+                <p className="text-gray-700 font-mono leading-relaxed mb-6">{personal.bio}</p>
+              </div>
+              <div className="flex flex-row justify-around items-center w-full">
+                <div className="text-center mb-6">
+                  <h1 className="text-6xl font-bold text-blue-800 mb-2 font-mono hover:text-blue-600">2+</h1>
+                  <h3 className="text-lg text-blue-600 font-mono">Years of Experience</h3>
+                </div>
+                <div className="text-center mb-6">
+                  <h1 className="text-6xl font-bold text-blue-800 mb-2 font-mono hover:text-blue-600">10+</h1>
+                  <h3 className="text-lg text-blue-600 font-mono">Projects Completed</h3>
+                </div>
+                <div className="text-center mb-6">
+                  <h1 className="text-6xl font-bold text-blue-800 mb-2 font-mono hover:text-blue-600">300+</h1>
+                  <h3 className="text-lg text-blue-600 font-mono">Diet Coke Finished</h3>
+                </div>
+              </div>
+            {/* Skills Section */}
+            {/*<div className="lg:col-span-2">
+              <Card className="border-4 border-blue-600 shadow-lg bg-white relative">
+                <PixelArt type="star" size="sm" className="absolute -top-2 -right-2" />
+                <CardContent className="p-8">
+                  <div className="mb-8">
+                    <h3 className="text-2xl font-bold text-blue-800 mb-4 font-mono flex items-center">
+                      <Zap className="h-6 w-6 mr-3" />
+                      Skills & Technologies
+                    </h3>
+                    <p className="text-gray-700 font-mono leading-relaxed mb-6">{personal.bio}</p>
+                  </div>
+
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <h4 className="font-semibold text-blue-800 mb-4 font-mono flex items-center">
+                        <Code className="h-5 w-5 mr-2" />
+                        Frontend Technologies
+                      </h4>
+                      <div className="flex flex-wrap gap-2">
+                        {personal.skills.slice(0, 5).map((skill, index) => (
+                          <Badge
+                            key={index}
+                            variant="secondary"
+                            className="bg-blue-200 text-blue-800 font-mono border-2 border-blue-400 hover:bg-blue-300 transition-colors"
+                          >
+                            {skill}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <h4 className="font-semibold text-blue-800 mb-4 font-mono flex items-center">
+                        <Award className="h-5 w-5 mr-2" />
+                        Backend & Tools
+                      </h4>
+                      <div className="flex flex-wrap gap-2">
+                        {personal.skills.slice(5).map((skill, index) => (
+                          <Badge
+                            key={index}
+                            variant="secondary"
+                            className="bg-blue-200 text-blue-800 font-mono border-2 border-blue-400 hover:bg-blue-300 transition-colors"
+                          >
+                            {skill}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {[
+                      { icon: Code, label: "Clean Code", pixelArt: "star" },
+                      { icon: Zap, label: "Fast Learning", pixelArt: "bee" },
+                      { icon: Award, label: "Quality Focus", pixelArt: "heart" },
+                      { icon: Mail, label: "Great Communication", pixelArt: "butterfly" },
+                    ].map((item, index) => (
+                      <div
+                        key={index}
+                        className="text-center p-4 border-2 border-blue-300 rounded-lg hover:bg-blue-50 transition-colors relative"
+                      >
+                        <PixelArt type={item.pixelArt as any} size="sm" className="absolute -top-1 -right-1" />
+                        <item.icon className="h-6 w-6 text-blue-600 mx-auto mb-2" />
+                        <span className="text-sm font-mono text-blue-800 font-semibold">{item.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            */}
+            </div> 
           </div>
         </div>
       </section>

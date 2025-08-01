@@ -18,6 +18,7 @@ export const portfolioData = {
       "AWS",
       "Docker",
     ],
+    github: "https://github.com/noor1711",
   },
 
   // Add pixel art decorative elements
