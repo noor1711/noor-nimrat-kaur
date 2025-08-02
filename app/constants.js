@@ -44,9 +44,9 @@ export const portfolioData = {
   workExperience: [
     {
       id: 1,
-      company: "GreenTech Solutions",
-      position: "Senior Full Stack Developer",
-      duration: "2022 - Present",
+      company: "Intuit Inc.",
+      position: "Software Engineer 2",
+      duration: "2025 - Present",
       description:
         "Lead developer for sustainable technology platforms. Built scalable web applications serving 100k+ users, focusing on environmental impact tracking and green energy solutions.",
       technologies: ["React", "Node.js", "PostgreSQL", "AWS"],

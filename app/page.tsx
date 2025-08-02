@@ -1,5 +1,6 @@
 "use client"
 
+import React from "react";
 import { portfolioData } from "./constants"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -9,11 +10,8 @@ import { PixelArt } from "@/components/pixel-art.jsx"
 import { MapPin, Mail, ExternalLink, Github, Calendar, Award, Code, Zap } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { Pixelify_Sans } from "next/font/google"
-
-const pixelifySans = Pixelify_Sans({
-  variable: "--font-pixelify-sans",
-});
+import Animator from "@/components/Animator"
+import { fetchJoke } from "./jokes.jsx";
 
 export default function PixelatedPortfolio() {
   const { personal, workExperience, projects } = portfolioData
@@ -21,6 +19,9 @@ export default function PixelatedPortfolio() {
   const scrollToSection = (sectionId: string) => {
     document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" })
   }
+
+  const [isDogActive, setIsDogActive] = React.useState(false)
+  const [isWateringPlant, setIsWateringPlant] = React.useState(false)
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-100 to-blue-200 relative overflow-hidden">
@@ -55,14 +56,11 @@ export default function PixelatedPortfolio() {
       <header className="sticky top-0 z-50 bg-blue-200 border-b-4 border-blue-300 shadow-lg">
         <div className="container mx-auto px-4 py-4">
           <nav className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <Image
-                src="/pixelDogWalkingBlue.gif"
-                alt="Next.js logo"
-                width={100}
-                height={60}
-                priority
-              />
+            <div 
+            onMouseEnter={() => setIsDogActive(true)}
+            onMouseLeave={() => setIsDogActive(false)}
+            className="flex items-center space-x-3 hover:cursor-pointer ">
+              <Animator dimensions={{ width: 100, height: 100 }} isActive={isDogActive} spriteSheetPath={undefined} />
               {/* <h1 className="text-2xl font-bold text-white font-mono">{personal.name}</h1> */}
             </div>
             <div className="hidden md:flex space-x-1">
@@ -169,11 +167,11 @@ export default function PixelatedPortfolio() {
               
               <div className="mb-8">
                 <div className="flex mb-4">
-                  <div className={`${pixelifySans.variable}`}>
-                    <h1 className={`${pixelifySans.variable} text-8xl font-bold text-blue-800 mb-4`}>
+                  <div className="">
+                    <h1 className="text-8xl font-bold text-blue-800 mb-4">
                     Software
                   </h1>
-                  <h1 className={`${pixelifySans.variable} text-8xl font-bold text-blue-600 mb-4`}>
+                  <h1 className="text-8xl font-bold text-blue-600 mb-4">
                     Engineer
                   </h1>
                   </div>
@@ -184,7 +182,9 @@ export default function PixelatedPortfolio() {
                       width={200}
                       height={200}
                       priority
+                      onClick={fetchJoke}
                     />
+
                   </div>
                 </div>
 
@@ -289,7 +289,12 @@ export default function PixelatedPortfolio() {
         <div className="container mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-blue-800 mb-4 font-mono flex items-center justify-center">
-              <PixelArt type="star" size="md" className="mr-3" />
+              <div 
+                onMouseEnter={() => setIsWateringPlant(true)}
+                onMouseLeave={() => setIsWateringPlant(false)}
+                className="flex items-center space-x-3 hover:cursor-pointer ">
+                  <Animator dimensions={{ width: 200, height: 200 }} spriteSheetPath="/waterFlower.png" isActive={isWateringPlant} />
+              </div>
               Work Experience
               <PixelArt type="heart" size="md" className="ml-3" />
             </h2>
@@ -300,10 +305,10 @@ export default function PixelatedPortfolio() {
             {workExperience.map((job, index) => (
               <Card
                 key={job.id}
-                className="border-4 border-blue-600 shadow-lg bg-white hover:shadow-xl transition-shadow relative"
+                className="border-4 py-0 
+                border-blue-600 shadow-lg bg-white hover:shadow-xl transition-shadow relative"
               >
-                <PixelArt type={index % 2 === 0 ? "flower" : "bunny"} size="sm" className="absolute -top-2 -right-2" />
-                <CardHeader className="bg-blue-100 border-b-4 border-blue-600">
+                <CardHeader className="bg-blue-100 py-6 border-b-4 border-blue-600">
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between">
                     <div>
                       <CardTitle className="text-2xl text-blue-800 font-mono mb-2">{job.position}</CardTitle>
