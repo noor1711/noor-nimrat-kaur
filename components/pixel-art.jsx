@@ -3,7 +3,7 @@ import React from "react";
 
 export function PixelArt({ type, size = "md", className = "" }) {
   const sizeClasses = {
-    sm: "w-8 h-8",
+    sm: "w-6 h-6",
     md: "w-12 h-12",
     lg: "w-16 h-16",
   };
@@ -143,23 +143,14 @@ export function PixelArt({ type, size = "md", className = "" }) {
     ),
     star: (
       <div className={`${sizeClasses[size]} ${className} relative`}>
-        <div className="absolute inset-0 grid grid-cols-4 grid-rows-4 gap-px">
-          <div className="bg-transparent"></div>
-          <div className="bg-transparent"></div>
+        <div className="absolute inset-0 grid grid-cols-2 grid-rows-2 gap-px">
           <div className="bg-yellow-400"></div>
-          <div className="bg-transparent"></div>
-          <div className="bg-transparent"></div>
+          <div className="bg-yellow-300"></div>
           <div className="bg-yellow-400"></div>
           <div className="bg-yellow-300"></div>
           <div className="bg-yellow-400"></div>
           <div className="bg-yellow-400"></div>
-          <div className="bg-yellow-300"></div>
-          <div className="bg-yellow-300"></div>
           <div className="bg-yellow-400"></div>
-          <div className="bg-transparent"></div>
-          <div className="bg-yellow-400"></div>
-          <div className="bg-yellow-400"></div>
-          <div className="bg-transparent"></div>
         </div>
       </div>
     ),

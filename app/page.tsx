@@ -11,7 +11,8 @@ import { MapPin, Mail, ExternalLink, Github, Calendar, Award, Code, Zap } from "
 import Image from "next/image"
 import Link from "next/link"
 import Animator from "@/components/Animator"
-import { fetchJoke } from "./jokes.jsx";
+import JokeModal from "@/components/JokeModal.jsx"
+// import Blinker from "@/components/Blinker.jsx";
 
 export default function PixelatedPortfolio() {
   const { personal, workExperience, projects } = portfolioData
@@ -22,6 +23,8 @@ export default function PixelatedPortfolio() {
 
   const [isDogActive, setIsDogActive] = React.useState(false)
   const [isWateringPlant, setIsWateringPlant] = React.useState(false)
+  const [isJokeCatActive, setIsJokeCatActive] = React.useState(false)
+  const [showJoke, setShowJoke] = React.useState(false)
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-100 to-blue-200 relative overflow-hidden">
@@ -54,14 +57,13 @@ export default function PixelatedPortfolio() {
 
       {/* Header */}
       <header className="sticky top-0 z-50 bg-blue-200 border-b-4 border-blue-300 shadow-lg">
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto px-4 py-2">
           <nav className="flex items-center justify-between">
             <div 
             onMouseEnter={() => setIsDogActive(true)}
             onMouseLeave={() => setIsDogActive(false)}
-            className="flex items-center space-x-3 hover:cursor-pointer ">
+            className="flex items-center space-x-3 hover:cursor-pointer hover:scale-105 transition-transform duration-300 ">
               <Animator dimensions={{ width: 100, height: 100 }} isActive={isDogActive} spriteSheetPath={undefined} />
-              {/* <h1 className="text-2xl font-bold text-white font-mono">{personal.name}</h1> */}
             </div>
             <div className="hidden md:flex space-x-1">
               {["about", "experience", "projects"].map((section) => (
@@ -122,13 +124,14 @@ export default function PixelatedPortfolio() {
             {/* Contact Card */}
             <div className="lg:col-span-1 hover:shadow-xl transition-shadow duration-300">
               <Card className="border-4 border-blue-300 shadow-lg bg-white relative sticky top-12">
-                <CardContent className="p-8 text-center">
+                <CardContent className="p-6 text-center">
                   <div className="mb-6 relative">
                     <Image
                       src={"/noorPortfolio.png"}
                       alt={personal.name}
+                      height={200}
                       width={200}
-                      height={250}
+
                       className="mx-auto rounded-lg shadow-lg"
                     />
                   </div>
@@ -166,7 +169,7 @@ export default function PixelatedPortfolio() {
             <div className="lg:col-span-2 flex flex-col justify-around">
               
               <div className="mb-8">
-                <div className="flex mb-4">
+                <div className="flex flex-row justify-around flex mb-4">
                   <div className="">
                     <h1 className="text-8xl font-bold text-blue-800 mb-4">
                     Software
@@ -176,16 +179,16 @@ export default function PixelatedPortfolio() {
                   </h1>
                   </div>
                   <div>
-                    <Image
-                      src="/coolWorkingCat.png"
-                      alt="Next.js logo"
-                      width={200}
-                      height={200}
-                      priority
-                      onClick={fetchJoke}
-                    />
-
+                    <div
+                      onMouseEnter={() => setIsJokeCatActive(true)}
+                      onMouseLeave={() => setIsJokeCatActive(false)}
+                      className="flex items-center space-x-3 hover:cursor-pointer hover:scale-105 transition-transform duration-300"
+                      onClick={() => setShowJoke(true)}
+                    >
+                      <Animator dimensions={{height: 200, width: 200}} spriteSheetPath="/clickMeJokeCat.png" isActive={isJokeCatActive} />
+                    </div>
                   </div>
+                  <JokeModal showJoke={showJoke} closeJoke={() => setShowJoke(false)} />
                 </div>
 
               </div>
@@ -293,12 +296,14 @@ export default function PixelatedPortfolio() {
                 onMouseEnter={() => setIsWateringPlant(true)}
                 onMouseLeave={() => setIsWateringPlant(false)}
                 className="flex items-center space-x-3 hover:cursor-pointer ">
-                  <Animator dimensions={{ width: 200, height: 200 }} spriteSheetPath="/waterFlower.png" isActive={isWateringPlant} />
+                  <Animator dimensions={{ width: 200, height: 200 }} spriteSheetPath="/bigFlowerWatering.png" isActive={isWateringPlant} />
               </div>
-              Work Experience
-              <PixelArt type="heart" size="md" className="ml-3" />
+              <div>
+                Work Experience
+                <div className="w-24 h-1 bg-blue-600 mx-auto"></div>
+              </div>
+              <div></div>
             </h2>
-            <div className="w-24 h-1 bg-blue-600 mx-auto"></div>
           </div>
 
           <div className="space-y-8">
@@ -322,8 +327,19 @@ export default function PixelatedPortfolio() {
                     </div>
                   </div>
                 </CardHeader>
-                <CardContent className="p-6">
-                  <p className="text-gray-700 mb-6 font-mono leading-relaxed">{job.description}</p>
+                <CardContent className="p-6 py-0">
+                  {job?.roles?.map((role) => (
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+                      <CardDescription className="text-md text-blue-700 font-mono font-semibold">
+                        {role.role}
+                      </CardDescription>
+                    <div className="flex items-center text-blue-600 mt-2 md:mt-0">
+                      <Calendar className="h-5 w-5 mr-2" />
+                      <span className="font-mono font-semibold">{role.time}</span>
+                    </div>
+                  </div>
+                  ))}
+                  <p className="text-gray-700 mb-6 top-6 mt-6 font-mono leading-relaxed">{job.description}</p>
 
                   <div className="mb-6">
                     <h4 className="font-semibold text-blue-800 mb-3 font-mono flex items-center">
@@ -343,7 +359,7 @@ export default function PixelatedPortfolio() {
                     </div>
                   </div>
 
-                  <div>
+                  <div className="mb-6">
                     <h4 className="font-semibold text-blue-800 mb-3 font-mono flex items-center">
                       <Zap className="h-4 w-4 mr-2" />
                       Key Achievements
@@ -371,7 +387,6 @@ export default function PixelatedPortfolio() {
             <h2 className="text-4xl font-bold text-blue-800 mb-4 font-mono flex items-center justify-center">
               <PixelArt type="bee" size="md" className="mr-3" />
               Personal Projects
-              <PixelArt type="cloud" size="md" className="ml-3" />
             </h2>
             <div className="w-24 h-1 bg-blue-600 mx-auto"></div>
           </div>
@@ -382,11 +397,6 @@ export default function PixelatedPortfolio() {
                 key={project.id}
                 className="border-4 border-blue-600 shadow-lg bg-white hover:shadow-xl transition-all duration-300 hover:-translate-y-1 relative"
               >
-                <PixelArt
-                  type={["heart", "butterfly", "flower", "bunny"][index % 4] as any}
-                  size="sm"
-                  className="absolute -top-2 -right-2 z-10"
-                />
                 <CardHeader className="p-0">
                   <div className="relative">
                     <Image
