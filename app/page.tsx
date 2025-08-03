@@ -290,20 +290,17 @@ export default function PixelatedPortfolio() {
       {/* Work Experience Section */}
       <section id="experience" className="py-20 px-4 bg-blue-50/50 relative z-10">
         <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-blue-800 mb-4 font-mono flex items-center justify-center">
+          <div className="text-center mb-6 flex items-center justify-center">
               <div 
                 onMouseEnter={() => setIsWateringPlant(true)}
                 onMouseLeave={() => setIsWateringPlant(false)}
-                className="flex items-center space-x-3 hover:cursor-pointer ">
+                className="flex items-center space-x-3 hover:cursor-pointer">
                   <Animator dimensions={{ width: 200, height: 200 }} spriteSheetPath="/bigFlowerWatering.png" isActive={isWateringPlant} />
               </div>
-              <div>
+              <h2 className="text-4xl font-bold text-blue-800 mb-4 font-mono">
                 Work Experience
-                <div className="w-24 h-1 bg-blue-600 mx-auto"></div>
-              </div>
+              </h2>
               <div></div>
-            </h2>
           </div>
 
           <div className="space-y-8">
@@ -443,7 +440,7 @@ export default function PixelatedPortfolio() {
                   <div className="mb-6">
                     <h4 className="font-semibold text-blue-800 mb-2 font-mono text-sm">Key Features:</h4>
                     <ul className="space-y-1">
-                      {project.features.slice(0, 3).map((feature, index) => (
+                      {project.features.slice(0, 4).map((feature, index) => (
                         <li key={index} className="flex items-start text-sm text-gray-600 font-mono">
                           <PixelArt type="star" size="sm" className="mr-2 mt-1 flex-shrink-0" />
                           {feature}
@@ -500,7 +497,7 @@ export default function PixelatedPortfolio() {
             </Link>
           </div>
           <Separator className="my-6 bg-blue-500" />
-          <p className="text-sm font-mono text-blue-200">© 2024 {personal.name}. Crafted with 💙 and pixels.</p>
+          <p className="text-sm font-mono text-blue-200">© 2025 {personal.name}. Crafted with love and pixels.</p>
         </div>
       </footer>
     </div>

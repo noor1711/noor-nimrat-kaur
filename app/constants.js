@@ -97,8 +97,8 @@ export const portfolioData = {
       technologies: ["React", "Next.js", "Redux", "Flask", "Google-GenAI"],
       features: [
         "Analyse your pinterest board",
+        "Product recommendations generated using AI",
         "Get product recommendations that match your aesthetic",
-        "Only click pinterest authorisation",
       ],
       liveUrl: "https://pins2-things.vercel.app/",
       githubUrl: "https://github.com/noor1711/pins2Things/",
@@ -113,8 +113,8 @@ export const portfolioData = {
       technologies: ["Django", "Python", "TensorFlow", "React"],
       features: [
         "Trained predictive models for emotional analysis",
-        "Users can upload audio recordings and images to be analysed for emotion prediction",
-        "Compare their analysis with the result and further utilise the quizzing module",
+        "Upload audio recordings and images for emotion prediction",
+        "Utilise the quizzing module to better understand patterns",
       ],
       githubUrl: "https://github.com/alexgarden/garden-planner",
       status: "Beta",
