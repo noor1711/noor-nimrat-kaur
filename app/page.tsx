@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { PixelArt } from "@/components/pixel-art.jsx"
-import { MapPin, Mail, ExternalLink, Github, Calendar, Award, Code, Zap } from "lucide-react"
+import { MapPin, Mail, ExternalLink, Github, Calendar, Code, Zap } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import Animator from "@/components/Animator"
@@ -20,6 +20,19 @@ export default function PixelatedPortfolio() {
   const scrollToSection = (sectionId: string) => {
     document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" })
   }
+
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  React.useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth < 768); // Example breakpoint for mobile
+    };
+
+    checkScreenSize(); // Check on initial render
+    window.addEventListener('resize', checkScreenSize); // Add event listener for resizing
+
+    return () => window.removeEventListener('resize', checkScreenSize); // Clean up
+  }, []);
 
   const [isDogActive, setIsDogActive] = React.useState(false)
   const [isWateringPlant, setIsWateringPlant] = React.useState(false)
@@ -59,12 +72,12 @@ export default function PixelatedPortfolio() {
       <header className="sticky top-0 z-50 bg-blue-200 border-b-4 border-blue-300 shadow-lg">
         <div className="container mx-auto px-4 py-2">
           <nav className="flex items-center justify-between">
-            <div 
+            {!isMobile && <div 
             onMouseEnter={() => setIsDogActive(true)}
             onMouseLeave={() => setIsDogActive(false)}
             className="flex items-center space-x-3 hover:cursor-pointer hover:scale-105 transition-transform duration-300 ">
               <Animator dimensions={{ width: 100, height: 100 }} isActive={isDogActive} spriteSheetPath={undefined} />
-            </div>
+            </div>}
             <div className="hidden md:flex space-x-1">
               {["about", "experience", "projects"].map((section) => (
                 <Button
@@ -131,7 +144,6 @@ export default function PixelatedPortfolio() {
                       alt={personal.name}
                       height={200}
                       width={200}
-
                       className="mx-auto rounded-lg shadow-lg"
                     />
                   </div>
